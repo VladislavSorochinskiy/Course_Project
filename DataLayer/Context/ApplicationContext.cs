@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 
-namespace Course_Project.Data
+namespace Course_Project.DataLayer
 {
     public class ApplicationContext : IdentityDbContext<User>
     {
@@ -34,6 +33,8 @@ namespace Course_Project.Data
                 .HasOne(p => p.User)
                 .WithMany(t => t.Likes)
                 .HasForeignKey(p => p.UserId);
+            modelBuilder.Entity<Like>()
+                .HasOne(p => p.Comment)
         }
     }
 }
