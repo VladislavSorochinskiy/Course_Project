@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Course_Project.DataLayer
 {
@@ -35,6 +36,8 @@ namespace Course_Project.DataLayer
                 .HasForeignKey(p => p.UserId);
             modelBuilder.Entity<Like>()
                 .HasOne(p => p.Comment)
+                .WithMany(t => t.Likes)
+                .HasForeignKey(p => p.CommentId);
         }
     }
 }

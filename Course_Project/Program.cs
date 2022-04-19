@@ -1,5 +1,4 @@
 using Course_Project.DataLayer;
-using Course_Project.DataLayer.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
