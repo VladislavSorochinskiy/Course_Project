@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Course_Project.DataLayer
+namespace DataLayer.Entities
 {
     public class User : IdentityUser
     {

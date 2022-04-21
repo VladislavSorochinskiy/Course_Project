@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using DataLayer.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Course_Project.DataLayer
+namespace DataLayer.Context
 {
     public class ApplicationContext : IdentityDbContext<User>
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
-
+            Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -38,6 +39,8 @@ namespace Course_Project.DataLayer
                 .HasOne(p => p.Comment)
                 .WithMany(t => t.Likes)
                 .HasForeignKey(p => p.CommentId);
+            modelBuilder.Entity<Like>()
+                .HasKey(p => p.UserId);
         }
     }
 }

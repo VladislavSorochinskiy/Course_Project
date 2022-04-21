@@ -1,4 +1,4 @@
-﻿namespace Course_Project.DataLayer
+﻿namespace DataLayer.Entities
 {
     public class Comment
     {
@@ -8,6 +8,10 @@
         public virtual User User { get; private set; }
         public virtual List<Like>? Likes { get; set; }
 
+        public Comment()
+        {
+
+        }
         public Comment(string description, User user)
         {
             UserId = user.Id;
