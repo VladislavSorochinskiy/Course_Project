@@ -10,7 +10,7 @@ namespace PresentationLayer.Controllers
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -28,8 +28,8 @@ namespace PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 User user = new User { Email = model.Email, UserName = model.Name};
+                await SetUserRole(user);
                 var result = await userManager.CreateAsync(user, model.Password);
-
                 if (result.Succeeded)
                 {
                     await signInManager.SignInAsync(user, false);
@@ -58,8 +58,9 @@ namespace PresentationLayer.Controllers
         {
             if (ModelState.IsValid)
             {
+                User user = await userManager.FindByNameAsync(model.Name);
                 var result = await signInManager.PasswordSignInAsync(model.Name, model.Password, model.RememberMe, false);
-                if (result.Succeeded)
+                if (result.Succeeded && !IsBlocked(user))
                 {
                     return RedirectToAction("Index", "Home");
                 }
@@ -77,6 +78,28 @@ namespace PresentationLayer.Controllers
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        private bool IsBlocked(User user)
+        {
+            if (user == null)
+            {
+                ModelState.AddModelError("", "User doesn't exsist!");
+                return true;
+            }
+
+            if (user.IsBlocked)
+            {
+                ModelState.AddModelError("", "You are blocked!");
+                return true;
+            }
+            else return false;
+        }
+
+        private async Task SetUserRole(User user)
+        {
+            IEnumerable<string> roles = new List<string>() { "User" };
+            await userManager.AddToRolesAsync(user, roles);
         }
     }
 }

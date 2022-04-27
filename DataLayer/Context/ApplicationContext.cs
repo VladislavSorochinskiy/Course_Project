@@ -9,6 +9,7 @@ namespace DataLayer.Context
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
@@ -43,7 +44,8 @@ namespace DataLayer.Context
             modelBuilder.Entity<Comment>()
                 .HasOne(p => p.Item)
                 .WithMany(t => t.Comments)
-                .HasForeignKey(p => p.ItemId);
+                .HasForeignKey(p => p.ItemId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Like>()
                 .HasOne(p => p.User)

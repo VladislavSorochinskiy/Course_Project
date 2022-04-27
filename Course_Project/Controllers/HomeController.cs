@@ -1,4 +1,9 @@
 ﻿using Course_Project.Models;
+using DataLayer.Context;
+using DataLayer.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,21 +11,19 @@ namespace Course_Project.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<User> userManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(UserManager<User> userManager)
         {
-            _logger = logger;
+            this.userManager = userManager;
         }
 
-        public IActionResult Index()
+        [Authorize]
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
+            User user = await userManager.GetUserAsync(HttpContext.User);
 
-        public IActionResult Privacy()
-        {
-            return View();
+            return View(user);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

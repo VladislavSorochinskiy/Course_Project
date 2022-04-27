@@ -1,5 +1,8 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
+@using Microsoft.AspNetCore.Identity
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,6 +26,9 @@
                         </li>
                         @if(User.Identity.IsAuthenticated)
                         {
+                            <Li>
+                                <a class="nav-link text-dark" asp-controller="Admin" asp-action="Index">Admin</a>
+                            </Li>
                             <li>
                                 <form method="post" asp-controller="Account" asp-action="Logout">
                                     <button type="submit" class="btn btn-light">Sign Out</button>
