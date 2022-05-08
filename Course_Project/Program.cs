@@ -1,3 +1,4 @@
+using BussinessLayer.Repositories;
 using DataLayer.Context;
 using DataLayer.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +12,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("CourseProjectConnection"));
+    options.UseLazyLoadingProxies(true);
 });
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
@@ -23,7 +25,10 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 })
     .AddEntityFrameworkStores<ApplicationContext>();
 
-builder.Services.AddScoped<ApplicationContext>();
+builder.Services.AddScoped<IBaseRepository<Collection, string>, CollectionRepository>();
+builder.Services.AddScoped<IBaseRepository<Item, int>, ItemRepository>();
+builder.Services.AddScoped<IBaseRepository<AdditionalItemField, int>, AdditionalItemFieldRepository>();
+builder.Services.AddScoped<IBaseRepository<ItemFieldName, int>, ItemFieldNameRepository>();
 
 var app = builder.Build();
 

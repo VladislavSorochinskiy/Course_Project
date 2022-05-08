@@ -1,0 +1,25 @@
+﻿@model PresentationLayer.Models.ItemModels.ItemAdditionViewModel
+@using DataLayer.Entities
+
+<h2>Edit item</h2>
+<form method="post" asp-controller="Item" asp-action="Add">
+        <div class="form-group">
+            <label asp-for="Name"></label><br />
+            <input asp-for="Name" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Tag"></label><br />
+            <input asp-for="Tag" />
+        </div>
+        <div class="form-group">
+            @foreach(var field in ViewBag.Fields)
+                {
+                <div>
+                     <label>@field</label><br />
+                     <input type="hidden" name="FieldNames" value="@field"/>
+                     <input type="text" name="Contents"/>
+                </div>
+                }   
+        </div>
+    <input type="submit" class="btn btn-light" value="Edit" asp-route-itemId="@ViewBag.ItemId"/>
+</form>

@@ -13,17 +13,14 @@ namespace Course_Project.Controllers
     {
         private readonly UserManager<User> userManager;
 
-        public HomeController(UserManager<User> userManager)
+        public HomeController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
         }
 
-        [Authorize]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            User user = await userManager.GetUserAsync(HttpContext.User);
-
-            return View(user);
+            return View(userManager.Users.ToList());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

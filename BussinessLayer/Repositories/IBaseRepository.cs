@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BussinessLayer.Repositories
+﻿namespace BussinessLayer.Repositories
 {
-    internal class IBaseRepository
+    public interface IBaseRepository<T, K> where T : class
     {
+        IQueryable<T> GetAllItems(K id); 
+        IEnumerable<T> GetAll();
+        T GetById(int id);
+        Task AddAsync(T entity);
+        Task Update(T entity);
+        Task Delete(T entity);
     }
 }

@@ -6,6 +6,13 @@ namespace DataLayer.Context
 {
     public class ApplicationContext : IdentityDbContext<User>
     {
+        public DbSet<Collection> Collections { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<ItemFieldName> ItemFieldNames { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Like> Likes { get; set; }
+        public DbSet<AdditionalItemField> AdditionalItemFields { get; set; }
+
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
@@ -15,7 +22,6 @@ namespace DataLayer.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,6 +36,11 @@ namespace DataLayer.Context
             modelBuilder.Entity<Item>()
                 .HasOne(p => p.Collection)
                 .WithMany(t => t.Items)
+                .HasForeignKey(p => p.CollectionId);
+
+            modelBuilder.Entity<ItemFieldName>()
+                .HasOne(p => p.Collection)
+                .WithMany(t => t.ItemFields)
                 .HasForeignKey(p => p.CollectionId);
 
             modelBuilder.Entity<AdditionalItemField>()

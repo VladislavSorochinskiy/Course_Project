@@ -1,0 +1,35 @@
+﻿@model PresentationLayer.Models.ItemModels.ItemFieldsViewModel
+
+<h3>Define collection item standard</h3>
+<form method="post">
+    <h4>Standard item fields is "Name" and "Tag"</h4>
+        <div class="row">
+            <div class="col col-lg-1">
+                <input type="button" class="btn btn-light" value="Add field" onclick="newField()"/>
+            </div>
+            <div class="col col-lg-3" id="fields"></div>
+            <div class="col-md-auto"></div>
+        </div>
+        <input type="submit" class="btn btn-Light" value="Create" asp-action="Create" asp-controller="Item" asp-route-collectionId="@ViewBag.CollectionId"/>
+</form>
+
+<script>
+    function newField() {
+    let container = document.getElementById("fields"); 
+    let fieldCount = container.getElementsByTagName("input").length;
+    let nextFieldId = fieldCount + 1;
+
+    let div = document.createElement("div");
+        div.setAttribute("class", "form-group");
+
+    let field = document.createElement("input");
+        field.setAttribute("class", "form-control");
+        field.setAttribute("id", "Fields[" + nextFieldId + "]");
+        field.setAttribute("name", "Fields");
+        field.setAttribute("type", "text");
+        field.setAttribute("placeholder", "Input field name");
+
+    div.appendChild(field);
+    container.appendChild(div);
+}
+</script>

@@ -9,8 +9,8 @@
         public string? Image { get; set; }
         public string UserId { get; private set; }
         public virtual User User { get; private set; }
-        public int ItemId { get; set; }
-        public virtual List<Item> Items { get; set; }
+        public virtual List<Item>? Items { get; set; }
+        public virtual List<ItemFieldName>? ItemFields { get; set; } 
 
         public Collection()
         {

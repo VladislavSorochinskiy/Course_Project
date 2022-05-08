@@ -6,7 +6,7 @@ using PresentationLayer.Models.AdminModels;
 
 namespace PresentationLayer.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly UserManager<User> userManager;

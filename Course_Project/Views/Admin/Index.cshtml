@@ -3,10 +3,6 @@
 @using DataLayer.Entities
 @inject UserManager<User> UserManager
 
-@{
-    ViewData["Title"] = "Users";
-}
-
 <script language="JavaScript">
     function toggle(source) {
        checkboxes = document.getElementsByName('selectedUsers');
@@ -50,7 +46,7 @@
                        {
                         <tr>
                             <th scope="row"><input type="checkbox" name="selectedUsers"
-                                       id="@user.Id" value="@user.Id" >
+                                       id="@user.Id" value="@user.Id">
                             </th>
                             <td>@user.UserName</td>
                             <td>@user.Email</td>
