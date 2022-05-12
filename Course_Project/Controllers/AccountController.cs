@@ -27,12 +27,9 @@ namespace PresentationLayer.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            await roleManager.CreateAsync(new IdentityRole("Admin"));
-            await roleManager.CreateAsync(new IdentityRole("User"));
-
             if (ModelState.IsValid)
             {
-                User user = new User { Email = model.Email, UserName = model.Name};
+                User user = new User { Email = model.Email, UserName = model.Name, IsAdmin = true};
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -103,7 +100,7 @@ namespace PresentationLayer.Controllers
 
         private async Task SetUserRole(User user)
         {
-            IEnumerable<string> roles = new List<string>() { "Admin", "User" };
+            IEnumerable<string> roles = new List<string>() { "User" };
             await userManager.AddToRolesAsync(user, roles);
         }
     }

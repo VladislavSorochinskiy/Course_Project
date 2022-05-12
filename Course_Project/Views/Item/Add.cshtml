@@ -3,13 +3,17 @@
 
 <h2>Add item to collection</h2>
 <form method="post" asp-controller="Item" asp-action="Add">
+    <div asp-validation-summary="ModelOnly"></div>
         <div class="form-group">
             <label asp-for="Name"></label><br />
             <input asp-for="Name" />
+            <span asp-validation-for="Name"></span>
+
         </div>
         <div class="form-group">
             <label asp-for="Tag"></label><br />
             <input asp-for="Tag" />
+            <span asp-validation-for="Tag"></span>
         </div>
         <div class="form-group">
            @foreach(var field in ViewBag.Fields)
@@ -18,6 +22,7 @@
                      <label>@field</label><br />
                      <input type="hidden" name="FieldNames" value="@field"/>
                      <input type="text" name="Contents"/>
+                     <span asp-validation-for="Contents"></span>
                 </div>
             }
         </div>

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<DataLayer.Entities.Item>
+
+@if(Model.Count() == 0)
+{
+    <h5>There aren't any items matching your query</h5>
+}
+else
+{
+    <h5> Founded items </h5>
+    <table class="table table-striped">
+                 <thead class="thead-inverse">
+                    <tr>
+                        <td>
+                            Name
+                        </td>
+                    </tr>
+                 </thead>
+                  <tbody>
+                      <tr>
+                          @foreach(var item in Model)
+                           {
+                            <td>
+                                @item.Name
+                            </td>
+                           }
+                      </tr>
+                 </tbody>
+        </table>    
+}

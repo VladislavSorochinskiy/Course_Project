@@ -2,18 +2,21 @@
 
 <h2>Create Collection</h2>
 <form method="post" asp-controller="Collection" asp-action="Create">
-    <div asp-validation-summary="ModelOnly"></div>
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
     <div>
         <label asp-for="Name"></label><br />
         <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
     </div>
     <div>
         <label asp-for="Topic"></label><br />
         <input asp-for="Topic" />
+        <span asp-validation-for="Topic"></span>
     </div>
     <div>
         <label asp-for="Description"></label><br />
         <input asp-for="Description" />
+        <span asp-validation-for="Description"></span>
     </div>
     <div></div>
     <div>

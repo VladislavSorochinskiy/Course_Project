@@ -1,4 +1,4 @@
-﻿@model PresentationLayer.Models.CollectionModels.CollectionCreateViewModel
+﻿@model PresentationLayer.Models.CollectionModels.CollectionEditViewModel
 
 <h2>Edit Collection</h2>
 <form method="post" asp-controller="Collection" asp-action="Create">
@@ -6,17 +6,20 @@
     <div>
         <label asp-for="Name"></label><br />
         <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
     </div>
     <div>
         <label asp-for="Topic"></label><br />
         <input asp-for="Topic" />
+        <span asp-validation-for="Topic"></span>
     </div>
     <div>
         <label asp-for="Description"></label><br />
         <input asp-for="Description" />
+        <span asp-validation-for="Description"></span>
     </div>
     <div></div>
     <div>
-        <button type="submit" class="btn btn-light" asp-route-itemid="@ViewBag.CollectionId"> Edit </button>
+        <button type="submit" class="btn btn-light" asp-route-itemid="@ViewBag.ItemId"> Edit </button>
     </div>
 </form>

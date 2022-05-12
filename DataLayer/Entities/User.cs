@@ -4,6 +4,7 @@ namespace DataLayer.Entities
 {
     public class User : IdentityUser
     {
+        public bool IsAdmin { get; set; }
         public bool IsBlocked { get; set; }
         public virtual List<Collection>? Collections { get; set; }
         public virtual List<Comment>? Comments { get; set; }

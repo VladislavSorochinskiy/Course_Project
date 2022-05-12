@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PresentationLayer.Models.AdminModels;
 
 namespace PresentationLayer.Controllers
 {
@@ -25,38 +24,28 @@ namespace PresentationLayer.Controllers
             return View(userManager.Users.ToList());
         }
 
-        public async Task<IActionResult> Edit(string userId)
+        public async Task<IActionResult> MakeAdmin(string userId)
         {
             User user = await userManager.FindByIdAsync(userId);
             if (user != null)
             {
-                var userRoles = await userManager.GetRolesAsync(user);
-                var allRoles = roleManager.Roles.ToList();
-                ChangeRoleViewModel model = new ChangeRoleViewModel
-                {
-                    UserId = user.Id,
-                    UserEmail = user.Email,
-                    UserRoles = userRoles,
-                    AllRoles = allRoles
-                };
-                return View(model);
+                await userManager.AddToRolesAsync(user, new List<string> { "Admin" });
+                user.IsAdmin = true;
+                await userManager.UpdateAsync(user);
+                return RedirectToAction("Index", "Admin");
             }
 
             return NotFound();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Edit(string userId, List<string> roles)
+        public async Task<IActionResult> TakeAdminAway(string userId)
         {
             User user = await userManager.FindByIdAsync(userId);
             if (user != null)
             {
-                var userRoles = await userManager.GetRolesAsync(user);
-                var addedRoles = roles.Except(userRoles);
-                var removedRoles = userRoles.Except(roles);
-                await userManager.AddToRolesAsync(user, addedRoles);
-                await userManager.RemoveFromRolesAsync(user, removedRoles);
-
+                await userManager.RemoveFromRolesAsync(user, new List<string> { "Admin" });
+                user.IsAdmin = false;
+                await userManager.UpdateAsync(user);
                 return RedirectToAction("Index", "Admin");
             }
 

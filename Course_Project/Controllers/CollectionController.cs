@@ -19,11 +19,17 @@ namespace PresentationLayer.Controllers
             this.userManager = userManager;
         }
 
-        public IActionResult Index(string userId)
+        [AllowAnonymous]
+        public async Task<IActionResult> Index(string userId)
         {
+            User currentUser = await userManager.GetUserAsync(HttpContext.User);
+            ViewBag.EnableEditing = false;
+            if(currentUser != null)
+            {
+                if ((currentUser.Id.Equals(userId) || currentUser.IsAdmin) && currentUser != null) ViewBag.ENableEditing = true;
+            }
             ViewBag.UserId = userId;
-            IEnumerable<Collection> collections = repository.GetAllItems(userId);
-            return View(collections);
+            return View(repository.GetAllItems(userId));
         }
 
         [HttpGet]
@@ -36,27 +42,43 @@ namespace PresentationLayer.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(string userId, CollectionCreateViewModel model)
         {
-            User user = await userManager.FindByIdAsync(userId);
-            Collection collection = new Collection(user, model.Name, model.Topic, model.Description);
-            await repository.AddAsync(collection);
+            if (ModelState.IsValid)
+            {
+                User user = await userManager.FindByIdAsync(userId);
+                Collection collection = new Collection(user, model.Name, model.Topic, model.Description);
+                await repository.AddAsync(collection);
 
-            return RedirectToAction("Create", new RouteValueDictionary(
-                 new { controller = "Item", action = "Create", userId = user.Id, collectionId = collection.Id }));
+                return RedirectToAction("Create", new RouteValueDictionary(
+                     new { controller = "Item", action = "Create", userId = user.Id, collectionId = collection.Id }));
+            }
+            else
+            {
+                ViewBag.UserId = userId;
+                return View(model);
+            }
         }
 
         [HttpGet]
         public IActionResult Edit(int itemid)
         {
-            ViewBag.CollectionId = itemid;
+            ViewBag.ItemId = itemid;
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(int itemid, CollectionEditViewModel model)
         {
-            Collection collection = repository.GetById(itemid);
-            await EditCollection(collection, model);
-            return RedirectToAction("Index", new { collection.UserId });
+            if (ModelState.IsValid)
+            {
+                Collection collection = repository.GetById(itemid);
+                await EditCollection(collection, model);
+                return RedirectToAction("Index", new { collection.UserId });
+            }
+            else 
+            {
+                ViewBag.Itemid = itemid;
+                return View(model);
+            }
         }
 
         [HttpPost]
