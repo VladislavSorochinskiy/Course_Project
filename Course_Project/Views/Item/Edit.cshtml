@@ -2,7 +2,7 @@
 @using DataLayer.Entities
 
 <h2>Edit item</h2>
-<form method="post" asp-controller="Item" asp-action="Add">
+<form method="post" asp-controller="Item" asp-action="Edit">
     <div asp-validation-summary="ModelOnly"></div>
         <div class="form-group">
             <label asp-for="Name"></label><br />
@@ -25,5 +25,5 @@
                 </div>
                 }   
         </div>
-    <input type="submit" class="btn btn-light" value="Edit" asp-route-itemId="@ViewBag.ItemId"/>
+    <button type="submit" class="btn btn-outline-dark" asp-route-itemId="@ViewBag.ItemId"Edit></button>
 </form>

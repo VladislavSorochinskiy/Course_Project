@@ -5,12 +5,12 @@
     <h4>Standard item fields is "Name" and "Tag"</h4>
         <div class="row">
             <div class="col col-lg-1">
-                <input type="button" class="btn btn-light" value="Add field" onclick="newField()"/>
+                <button type="button" class="btn btn-outline-dark" onclick="newField()">Add field</button>
             </div>
             <div class="col col-lg-3" id="fields"></div>
             <div class="col-md-auto"></div>
         </div>
-        <input type="submit" class="btn btn-Light" value="Create" asp-action="Create" asp-controller="Item" asp-route-collectionId="@ViewBag.CollectionId"/>
+        <button type="submit" class="btn btn-outline-dark" asp-action="Create" asp-controller="Item" asp-route-collectionId="@ViewBag.CollectionId">Create</button>
 </form>
 
 <script>

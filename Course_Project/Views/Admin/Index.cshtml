@@ -59,11 +59,11 @@
                             <td>
                                 @if(user.IsAdmin)
                                 {
-                                    <a class="btn btn-light" asp-controller="Admin" asp-action="TakeAdminAway" asp-route-userid="@user.Id">Take admin away</a>
+                                    <a class="btn btn-outline-dark" asp-controller="Admin" asp-action="TakeAdminAway" asp-route-userid="@user.Id">Take admin away</a>
                                 }
                                 else
                                 {   
-                                    <a class="btn btn-light" asp-controller="Admin" asp-action="MakeAdmin" asp-route-userid="@user.Id">Make admin</a>
+                                    <a class="btn btn-outline-dark" asp-controller="Admin" asp-action="MakeAdmin" asp-route-userid="@user.Id">Make admin</a>
                                 }
                             
                             </td>

@@ -54,7 +54,7 @@
                             @if (ViewBag.ENableEditing == true)
                             {
                                <td>
-                                   <a class="btn btn-light" asp-controller="Item" asp-action="Edit" asp-route-itemId = "@item.Id" asp-route-collectionId = "@item.Id"> Edit </a>
+                                   <a class="btn btn-outline-dark" asp-controller="Item" asp-action="Edit" asp-route-itemId = "@item.Id" asp-route-collectionId = "@item.Id"> Edit </a>
                                </td> 
                             }
                         </tr>
@@ -66,7 +66,7 @@
      @if(ViewBag.ENableEditing)
     {
         <div>
-            <a class="btn btn-light" asp-controller="Item" asp-action="Add" asp-route-collectionId="@ViewBag.CollectionId">Add Item</a>
+            <a class="btn btn-outline-dark" asp-controller="Item" asp-action="Add" asp-route-collectionId="@ViewBag.CollectionId">Add Item</a>
         </div>
     }
 </div>
