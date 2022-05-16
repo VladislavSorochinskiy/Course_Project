@@ -22,8 +22,8 @@ namespace PresentationLayer.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index(string userId)
         {
-            User currentUser = await userManager.GetUserAsync(HttpContext.User);
             ViewBag.EnableEditing = false;
+            User currentUser = await userManager.GetUserAsync(HttpContext.User);
             if(currentUser != null)
             {
                 if ((currentUser.Id.Equals(userId) || currentUser.IsAdmin) && currentUser != null) ViewBag.ENableEditing = true;
